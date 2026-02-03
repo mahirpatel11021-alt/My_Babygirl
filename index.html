@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Diya 🤍 Be My Valentine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #ffffff, #f7eaea);
+  animation: pulseBG 6s ease-in-out infinite alternate;
+}
+
+@keyframes pulseBG {
+  0% { background: linear-gradient(135deg, #ffffff, #f7eaea); }
+  100% { background: linear-gradient(135deg, #fdf2f5, #ffffff); }
+}
+
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  max-width: 380px;
+  width: 90%;
+  z-index: 5;
+  animation: slideIn 1s forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-80px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.card.expand {
+  animation: expandCard 1s ease forwards;
+}
+
+@keyframes expandCard {
+  from { transform: scale(1); }
+  to { transform: scale(1.04); }
+}
+
+h1 { color: #d6336c; }
+p { color: #555; font-size: 16px; line-height: 1.5; }
+
+.buttons {
+  margin-top: 20px;
+  position: relative;
+  height: 80px;
+}
+
+button {
+  padding: 12px 26px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: none;
+}
+
+.yes { background: #d6336c; color: white; }
+.no { background: #eee; color: #555; position: absolute; }
+
+.hidden { display: none; }
+
+.glow {
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 20px #ffb3c6; }
+  to { box-shadow: 0 0 45px #ff4d6d; }
+}
+
+/* Floating icons */
+.floating {
+  position: absolute;
+  font-size: 22px;
+  animation: float linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes float {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  font-size: 18px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  from { transform: translateY(-10vh) rotate(0deg); }
+  to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* Sparkles */
+.sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #ffffff, #ffccd5);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Image reveal */
+.love-image {
+  max-width: 100%;
+  border-radius: 22px;
+  margin-top: 20px;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 1.2s ease;
+  box-shadow: 0 0 30px rgba(214, 51, 108, 0.35);
+}
+
+.love-image.show {
+  opacity: 1;
+  transform: scale(1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Diya 🤍</h1>
+
+  <p>
+    My babygirl,<br><br>
+    Since the day you walked into my life, it has been the best memories of my life.
+    You are my Queen, my angel descended from heaven.
+    So will you grace me by being my
+    <strong style="color:#d6336c;">Valentine</strong>? 🤍
+  </p>
+
+  <div class="buttons" id="buttons">
+    <button class="yes" onclick="sayYes()">YES 🥰</button>
+    <button class="no" id="noBtn">No 😏</button>
+  </div>
+
+  <div id="response" class="hidden">
+    <h2>My Love 🤍</h2>
+    <p>
+      I promise to keep you happy, always and forever.
+      So please be with me forever.
+      I love you more than any person can love another.
+    </p>
+
+    <img src="diya.jpeg" class="love-image" id="loveImage">
+
+    <p style="margin-top:15px;"><strong>— Mahir 🤍</strong></p>
+  </div>
+</div>
+
+<audio id="music" preload="auto">
+  <source src="those-eyes.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Floating background icons
+function floatIcons() {
+  const icons = ['🤍','🤍','🌹','✨'];
+  const f = document.createElement('div');
+  f.className = 'floating';
+  f.innerHTML = icons[Math.floor(Math.random()*icons.length)];
+  f.style.left = Math.random()*100 + 'vw';
+  f.style.animationDuration = (Math.random()*6 + 6) + 's';
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),12000);
+}
+setInterval(floatIcons,500);
+
+// Confetti burst
+function glamConfetti() {
+  const icons = ['💖','💞','✨','🤍','💫'];
+  for(let i=0;i<45;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.innerHTML=icons[Math.floor(Math.random()*icons.length)];
+    c.style.left=Math.random()*100+'vw';
+    c.style.animationDuration=(Math.random()*2+3)+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+
+// NO button dodge
+const noBtn=document.getElementById('noBtn');
+noBtn.addEventListener('mouseover',dodge);
+noBtn.addEventListener('touchstart',dodge);
+
+function dodge(){
+  noBtn.style.left=Math.random()*220+'px';
+  noBtn.style.top=Math.random()*60+'px';
+}
+
+// YES action
+function sayYes(){
+  document.getElementById('buttons').classList.add('hidden');
+  document.getElementById('response').classList.remove('hidden');
+
+  const card=document.getElementById('card');
+  card.classList.add('glow','expand');
+
+  const music=document.getElementById('music');
+  music.currentTime=0;
+  music.volume=0.7;
+  music.play().catch(()=>{});
+
+  glamConfetti();
+
+  const img=document.getElementById('loveImage');
+  setTimeout(()=>{
+    img.classList.add('show');
+    img.scrollIntoView({behavior:'smooth',block:'center'});
+  },900);
+}
+
+// Tap sparkles
+document.addEventListener('click',sparkle);
+document.addEventListener('touchstart',sparkle);
+
+function sparkle(e){
+  const x=e.clientX || e.touches[0].clientX;
+  const y=e.clientY || e.touches[0].clientY;
+  const s=document.createElement('div');
+  s.className='sparkle';
+  s.style.left=x-5+'px';
+  s.style.top=y-5+'px';
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),500);
+}
+</script>
+
+</body>
+</html>
